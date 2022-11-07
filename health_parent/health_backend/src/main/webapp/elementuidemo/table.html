@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+  <div id="app">
+    <el-table :data="tableData" stripe>
+      <el-table-column prop="date" label="日期"></el-table-column>
+      <el-table-column prop="name" label="姓名"></el-table-column>
+      <el-table-column prop="address" label="地址"></el-table-column>
+      <el-table-column label="操作" align="center">
+        <!--
+            slot-scope：作用域插槽，可以获取表格数据
+            scope：代表表格数据，可以通过scope.row来获取表格当前行数据，scope不是固定写法
+        -->
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button type="danger" size="mini"  @click="handleDelete(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+  </div>
+
+<script>
+  new Vue({
+    el:'#app',
+    data:{
+      tableData:[
+        {date:'114.5.14',name:'tadokoro',address:'simokitazawa'},
+        {date:'1919.8.10',name:'kouji',address:'japan'}
+      ]
+    },
+    methods:{
+      handleUpdate(a){
+        alert(a.name);
+    }
+    }
+  });
+</script>
+</body>
+</html>

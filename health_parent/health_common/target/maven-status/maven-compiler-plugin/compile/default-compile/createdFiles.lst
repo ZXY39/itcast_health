@@ -1,0 +1,15 @@
+com\zgasq\pojo\Menu.class
+com\zgasq\pojo\Permission.class
+com\zgasq\constant\MessageConstant.class
+com\zgasq\pojo\User.class
+com\zgasq\pojo\CheckGroup.class
+com\zgasq\pojo\Order.class
+com\zgasq\entity\Result.class
+com\zgasq\pojo\Role.class
+com\zgasq\pojo\Member.class
+com\zgasq\entity\QueryPageBean.class
+com\zgasq\entity\PageResult.class
+com\zgasq\Main.class
+com\zgasq\pojo\Setmeal.class
+com\zgasq\pojo\CheckItem.class
+com\zgasq\pojo\OrderSetting.class
