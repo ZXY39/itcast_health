@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zgasq.dao.CheckGroupDao">
+    <resultMap type="com.zgasq.pojo.CheckGroup" id="baseResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+    </resultMap>
+    <resultMap type="com.zgasq.pojo.CheckGroup"
+               id="findByIdResultMap"
+               extends="baseResultMap">
+        <collection property="checkItems"
+                    javaType="ArrayList"
+                    ofType="com.zgasq.pojo.CheckItem"
+                    column="id"
+                    select="com.zgasq.dao.CheckItemDao.findCheckItemById">
+        </collection>
+    </resultMap>
+    <select id="findCheckGroupById" resultMap="findByIdResultMap">
+        select * from t_checkgroup
+        where id
+                  in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id=#{id})
+    </select>
+
+   <insert id="add" parameterType="com.zgasq.pojo.CheckGroup">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+
+       insert into t_checkgroup(code,name,sex,helpCode,remark,attention)
+       values
+           (#{code},#{name},#{sex},#{helpCode},#{remark},#{attention})
+   </insert>
+
+    <insert id="setCheckGroupAndCheckItem" parameterType="map">
+
+       insert into t_checkgroup_checkitem(checkgroup_id,checkitem_id)
+       values
+           (#{checkGroupId},#{checkitemId})
+   </insert>
+
+    <select id="findByCondition" parameterType="string" resultType="com.zgasq.pojo.CheckGroup">
+
+        select *  from t_checkgroup
+        <if test="value!=null and value != '' and value.length >0">
+            where code =#{a} or name like #{a} or helpCode like #{a}
+        </if>
+    </select>
+
+    <select id="findById" parameterType="int" resultType="com.zgasq.pojo.CheckGroup">
+        select *  from t_checkgroup where id =#{haha}
+    </select>
+
+    <select id="findCheckItemIdsByCheckGroupId" parameterType="int" resultType="int">
+        select checkitem_id  from t_checkgroup_checkitem where checkgroup_id =#{haha}
+    </select>
+
+    <update id="edit" parameterType="com.zgasq.pojo.CheckGroup" >
+        update t_checkgroup
+    <set>
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="sex != null">
+            sex = #{sex},
+        </if>
+        <if test="code != null">
+            code = #{code},
+        </if>
+        <if test="helpCode != null">
+            helpCode = #{helpCode},
+        </if>
+        <if test="attention != null">
+            attention = #{attention},
+        </if>
+        <if test="remark != null">
+            remark = #{remark},
+        </if>
+    </set>
+        where id =#{id}
+    </update>
+
+    <delete id="deleteAssosiation" parameterType="int" >
+        delete from t_checkgroup_checkitem where checkgroup_id =#{id}
+    </delete>
+
+    <delete id="deleteInCheckgroup" parameterType="int" >
+        delete from t_checkgroup where id =#{id}
+    </delete>
+
+    <select id="findAll" resultType="com.zgasq.pojo.CheckGroup">
+        select * from t_checkgroup;
+    </select>
+
+
+</mapper>

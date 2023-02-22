@@ -230,6 +230,29 @@
             methods: {
                 //编辑
                 handleEdit() {
+                    this.$refs['dataEditForm'].validate((valid) =>{
+                        if(valid){
+                            axios.post("/checkitem/edit.do",this.formData).then((res) =>{
+                                if(res.data.flag){
+                                    this.$message({
+                                        type:'success',
+                                        message:res.data.message
+                                    })
+                                }else {
+                                    this.$message.error(res.data.message);
+                                }
+                            }).finally(() =>{
+                                this.findPage();
+                                this.dialogFormVisible4Edit =false;
+                            })
+                        }else{
+                            this.$message.error("表单数据有误");
+                            return false;
+                        }
+
+
+                    })
+
                 },
                 //添加
                 handleAdd () {
@@ -293,12 +316,31 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    this.dialogFormVisible4Edit =true;
+                    axios.get("/checkitem/findById.do?id="+row.id).then((res)=>{
+                        if(res.data.flag){
+                             this.formData =res.data.data;
+                        }else{
+                            this.$message.error(res.data.message);
+                        }
+                    });
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {
                     this.pagination.currentPage =currentPage;
                     this.findPage();
                 },
+                //权限不足提示
+                showMessage(r){
+                    if(r == 'Error: Request failed with status code 403'){
+                        //权限不足
+                        this.$message.error('无访问权限');
+                        return;
+                    }else{
+                        this.$message.error('未知错误');
+                        return;
+                    }
+                }
                 // 删除
                 handleDelete(row) {
                     this.$confirm("是否删除？","提示",{
@@ -315,6 +357,8 @@
                             }else{
                                 this.$message.error(res.data.message);
                             }
+                        }).catch((r)=>{
+                            this.showMessage(r)
                         });
                     }).catch(()=>{
                         this.$message({

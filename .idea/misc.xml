@@ -3,16 +3,23 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/health_parent/health_backend" />
+    <file type="web" url="file://$PROJECT_DIR$/health_parent/health_jobs" />
+    <file type="web" url="file://$PROJECT_DIR$/health_parent/health_mobile" />
     <file type="web" url="file://$PROJECT_DIR$/health_parent/health_service_provider" />
+    <file type="web" url="file://$PROJECT_DIR$/health_parent1/health_backend" />
+    <file type="web" url="file://$PROJECT_DIR$/health_parent1/health_jobs" />
+    <file type="web" url="file://$PROJECT_DIR$/health_parent1/health_mobile" />
+    <file type="web" url="file://$PROJECT_DIR$/health_parent1/health_service_provider" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/health_parent/pom.xml" />
+        <option value="$PROJECT_DIR$/health_parent1/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
